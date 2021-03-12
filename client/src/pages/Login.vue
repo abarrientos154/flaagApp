@@ -70,9 +70,17 @@ export default {
         message: 'Iniciando sesión'
       })
       this.$api.post('login', this.form).then(res => {
+        console.log(res, 'ressss')
         if (res) {
-          this.$router.push('/inicio')
-          this.login(res)
+          if (res.FLAAG_SESSION_INFO.roles[0] === 3) {
+            this.$router.push('/index_app')
+            this.login(res)
+          } else {
+            this.$q.notify({
+              message: 'No eres Emprendedor',
+              color: 'negative'
+            })
+          }
         } else {
           console.log('hubo un error')
         }

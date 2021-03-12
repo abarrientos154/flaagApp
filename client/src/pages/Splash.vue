@@ -16,12 +16,6 @@ export default {
     }
   },
   mounted () {
-    if (this.$q.platform.is.mobile) {
-      console.log('es emprendedor')
-    } else {
-      console.log('no es emprendedor')
-      this.$router.push('inicio')
-    }
   },
   methods: {
     ejecutar () {

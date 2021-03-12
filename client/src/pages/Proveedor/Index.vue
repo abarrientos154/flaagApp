@@ -3,7 +3,7 @@
   <div class="text-center text-indigo-7 text-bold text-h5 fuente q-mt-lg shadow-3" style="z-index:1"> ¿Que Quieres Hacer? </div>
    <q-card class="q-mt-xl shadow-up-3 q-ma-sm">
       <q-card-section horizontal style="height:400px">
-        <q-card-section style="width:50%" class="bg-primary" @click="$router.push('/productos')">
+        <q-card-section style="width:50%" class="bg-primary" @click="$router.push('/mi_tienda')">
           <div class="text-center row items-center justify-center fit text-indigo-10 text-h6">
             ir a mi Tienda
           </div>

@@ -5,8 +5,7 @@
     </div>
     <q-img :src="user.perfil ? baseuImgTienda : user.perfilEstatico ? 'logos/' + user.id.toString() + '.jpeg' : 'noimg.png'" style="height:300px; width:" >
       <div class="full-width full-height">
-        <div class="row justify-between bg-transparent" style="width: 100%">
-          <q-btn flat round class="q-ma-xs" icon="keyboard_backspace" color="white" @click="$router.go(-1)" />
+        <div class="row justify-end bg-transparent" style="width: 100%">
           <q-btn no-caps rounded class="q-ma-xs" label="Editar perfil" icon="edit" color="white" text-color="black" @click="ver()" />
         </div>
         <div class="row absolute-center justify-center" style="width:100%">
