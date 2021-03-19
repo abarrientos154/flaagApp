@@ -83,6 +83,7 @@ export default {
           }
         } else {
           console.log('hubo un error')
+          this.$q.loading.hide()
         }
       })
       this.$q.loading.hide()

@@ -148,6 +148,8 @@ export default {
           })
           this.$router.push('/producto_guardado')
           this.$q.loading.hide()
+        } else {
+          this.$q.loading.hide()
         }
       })
     },
