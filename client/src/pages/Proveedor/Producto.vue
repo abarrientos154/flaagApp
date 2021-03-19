@@ -126,7 +126,9 @@ export default {
       }
     },
     async guardar () {
-      this.$q.loading.show()
+      this.$q.loading.show({
+        message: 'Subiendo su Producto. Por Favor Espere'
+      })
       var formData = new FormData()
       var files = this.images
       if (files.length > 0) {
