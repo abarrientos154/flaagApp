@@ -12,7 +12,8 @@ const routes = [
       { path: '/producto', component: () => import('pages/Proveedor/Producto.vue') },
       { path: '/producto/:id', component: () => import('pages/Proveedor/EditarProducto.vue') },
       { path: '/mi_tienda', component: () => import('pages/Proveedor/ListaProductos.vue') },
-      { path: '/reporte_tienda', component: () => import('pages/Proveedor/Reporte.vue') }
+      { path: '/reporte_tienda', component: () => import('pages/Proveedor/Reporte.vue') },
+      { path: '/producto_guardado', component: () => import('pages/Proveedor/ProductoGuardado.vue') }
     ]
   },
   { path: '/login', component: () => import('pages/Login.vue') },

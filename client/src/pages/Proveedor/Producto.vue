@@ -146,7 +146,7 @@ export default {
             message: 'Producto agregado Correctamente',
             color: 'positive'
           })
-          this.$router.go(-1)
+          this.$router.push('/producto_guardado')
           this.$q.loading.hide()
         }
       })

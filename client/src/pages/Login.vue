@@ -73,7 +73,7 @@ export default {
         console.log(res, 'ressss')
         if (res) {
           if (res.FLAAG_SESSION_INFO.roles[0] === 3) {
-            this.$router.push('/index_app')
+            this.$router.push('/producto')
             this.login(res)
           } else {
             this.$q.notify({
