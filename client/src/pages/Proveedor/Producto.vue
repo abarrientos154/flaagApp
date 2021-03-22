@@ -1,17 +1,22 @@
 <template>
   <q-page>
-
     <q-card class="q-ma-sm q-pa-md">
       <q-btn icon="arrow_back" color="primary" @click="$router.go(-1)" flat dense style="position:absolute;top:5px;left:5px" />
       <div class="text-h6 text-grey-7 q-mt-lg"> Agregar Producto </div>
-      <div class="full-width row justify-center">
-        <q-avatar size="100px">
-          <div style="z-index:1">
-            <q-file borderless v-model="img" class="button-camera" :disable="images.length > 4" @input="insertarImagen()" accept=".jpg, image/*">
-              <q-icon name="add_a_photo" class="absolute-center" size="30px" color="white" />
-            </q-file>
-          </div>
-        </q-avatar>
+      <div class="row items-center justify-center">
+        <div class="full-width row justify-center col">
+          <q-avatar size="100px">
+            <div style="z-index:1">
+              <q-file borderless v-model="img" class="button-camera" :disable="images.length > 4" @input="insertarImagen()" accept=".jpg, image/*">
+                <q-icon name="folder_open" class="absolute-center" size="30px" color="white" />
+              </q-file>
+            </div>
+          </q-avatar>
+        </div>
+        <div class="col">
+          <q-avatar size="80px" icon="add_a_photo" @click="captureImage" text-color="white" class="bg-primary">
+          </q-avatar>
+        </div>
       </div>
       <div class="text-grey-6">Imagenes del producto (hasta 5 imagenes)</div>
       <q-scroll-area v-if="images && images.length > 0" horizontal style="height:85px; width: 100%;" class="bg-grey-1"
@@ -70,6 +75,9 @@
 </template>
 
 <script>
+import { Plugins, CameraResultType } from '@capacitor/core'
+// import randomize from 'randomatic'
+const { Camera } = Plugins
 export default {
   data () {
     return {
@@ -95,7 +103,8 @@ export default {
       },
       images: [],
       imagesSubir: [],
-      img: null
+      img: null,
+      imageSrc: null
     }
   },
   computed: {
@@ -154,6 +163,55 @@ export default {
           this.$q.loading.hide()
         }
       })
+    },
+    async dataURItoBlob (dataURI) {
+      // convert base64 to raw binary data held in a string
+      // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
+      var byteString = atob(dataURI.split(',')[1])
+
+      // separate out the mime component
+      var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
+
+      // write the bytes of the string to an ArrayBuffer
+      var ab = new ArrayBuffer(byteString.length)
+      var ia = new Uint8Array(ab)
+      for (var i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i)
+      }
+      // Old Code
+      // write the ArrayBuffer to a blob, and you're done
+      // var bb = new BlobBuilder();
+      // bb.append(ab);
+      // return bb.getBlob(mimeString);
+      // New Code
+      return new Blob([ab], { type: mimeString })
+    },
+    async blobToFile (theBlob, fileName, type) {
+      // A Blob() is almost a File() - it's just missing the two properties below which we will add
+      return new File([theBlob], fileName, type)
+    },
+    async captureImage () {
+      const image = await Camera.getPhoto({
+        quality: 90,
+        allowEditing: true,
+        resultType: CameraResultType.DataUrl
+      })
+      // image.webPath will contain a path that can be set as an image src.
+      // You can access the original file using image.path, which can be
+      // passed to the Filesystem API to read the raw data of the image,
+      // if desired (or pass resultType: CameraResultType.Base64 to getPhoto)
+      console.log(image, 'imageeeeeeee pluginnnnnnnn')
+      this.imageSrc = await this.dataURItoBlob(image.dataUrl)
+      console.log(this.imageSrc, 'imgsrc')
+      // const codeFile = randomize('Aa0', 30)
+      // console.log(codeFile + '.' + image.format, 'radomaticcc')
+      // var file = await this.blobToFile(image, codeFile + '.' + image.format, { type: 'image/png' })
+      // console.log(file, 'fileeeeeeeeee')
+      var file = new File([this.imageSrc], 'image.png')
+      console.log(file, 'fileeeeeeeeeeee')
+      this.images.push(file)
+      this.imagesSubir.push(URL.createObjectURL(this.imageSrc))
+      console.log(this.images, 'images', this.imagesSubir, 'images subir')
     },
     insertarImagen () {
       this.images.push(this.img)
