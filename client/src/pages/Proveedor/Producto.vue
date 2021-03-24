@@ -4,7 +4,7 @@
       <q-btn icon="arrow_back" color="primary" @click="$router.go(-1)" flat dense style="position:absolute;top:5px;left:5px" />
       <div class="text-h6 text-grey-7 q-mt-lg"> Agregar Producto </div>
       <div class="row items-center justify-center">
-        <div class="full-width row justify-center col">
+        <!-- <div class="full-width row justify-center col">
           <q-avatar size="100px">
             <div style="z-index:1">
               <q-file borderless v-model="img" class="button-camera" :disable="images.length > 4" @input="insertarImagen()" accept=".jpg, image/*">
@@ -12,8 +12,8 @@
               </q-file>
             </div>
           </q-avatar>
-        </div>
-        <div class="col">
+        </div> -->
+        <div class="">
           <q-avatar size="80px" icon="add_a_photo" @click="captureImage" text-color="white" class="bg-primary">
           </q-avatar>
         </div>

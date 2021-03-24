@@ -65,11 +65,11 @@ export default {
   },
   methods: {
     ...mapMutations('generals', ['login']),
-    onSubmit () {
+    async onSubmit () {
       this.$q.loading.show({
         message: 'Iniciando sesión'
       })
-      this.$api.post('login', this.form).then(res => {
+      await this.$api.post('login', this.form).then(res => {
         console.log(res, 'ressss')
         if (res) {
           if (res.FLAAG_SESSION_INFO.roles[0] === 3) {
