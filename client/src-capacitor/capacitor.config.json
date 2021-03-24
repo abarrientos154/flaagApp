@@ -1,0 +1,7 @@
+{
+  "appId": "org.flaag.eiche",
+  "appName": "Flaag App",
+  "bundledWebRuntime": false,
+  "npmClient": "yarn",
+  "webDir": "www"
+}
