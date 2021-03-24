@@ -16,9 +16,9 @@ const routes = [
       { path: '/producto_guardado', component: () => import('pages/Proveedor/ProductoGuardado.vue') }
     ]
   },
-  { path: '/login', component: () => import('pages/Login.vue') },
+  // { path: '/login', component: () => import('pages/Login.vue') },
   { path: '/registro', component: () => import('pages/Registro.vue') },
-  { path: '/splash', component: () => import('pages/Splash.vue') },
+  { path: '/splash', component: () => import('pages/AnimateSplashLogin.vue') },
   {
     path: '/',
     redirect: '/splash'
