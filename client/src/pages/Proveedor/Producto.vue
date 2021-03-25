@@ -14,7 +14,7 @@
           </q-avatar>
         </div> -->
         <div class="">
-          <q-avatar size="80px" icon="add_a_photo" @click="captureImage" text-color="white" class="bg-primary">
+          <q-avatar size="80px" icon="add_a_photo" @click="imagesSubirCordova" text-color="white" class="bg-primary">
           </q-avatar>
         </div>
       </div>
@@ -71,6 +71,21 @@
         <q-btn label="guardar" @click="guardar()" color="primary" push style="width:50%" />
       </q-card-actions>
     </q-card>
+    <q-dialog v-model="alert.show">
+      <q-card>
+        <q-card-section>
+          <div class="text-h6">DATA CAMARA</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          {{alert.info}}
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="OK" color="primary" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </q-page>
 </template>
 
@@ -81,6 +96,10 @@ const { Camera } = Plugins
 export default {
   data () {
     return {
+      alert: {
+        show: false,
+        info: null
+      },
       thumbStyle: {
         right: '4px',
         borderRadius: '5px',
@@ -164,26 +183,29 @@ export default {
         }
       })
     },
+    async imagesSubirCordova () {
+      navigator.camera.getPicture(
+        data => { // on success
+          this.imageSrc = `data:image/jpeg;base64,${data}`
+          this.alert.show = true
+          this.alert.info = data
+        },
+        () => { // on fail
+          this.$q.notify('Could not access device camera.')
+        },
+        {
+          // camera options
+        }
+      )
+    },
     async dataURItoBlob (dataURI) {
-      // convert base64 to raw binary data held in a string
-      // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
       var byteString = atob(dataURI.split(',')[1])
-
-      // separate out the mime component
       var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
-
-      // write the bytes of the string to an ArrayBuffer
       var ab = new ArrayBuffer(byteString.length)
       var ia = new Uint8Array(ab)
       for (var i = 0; i < byteString.length; i++) {
         ia[i] = byteString.charCodeAt(i)
       }
-      // Old Code
-      // write the ArrayBuffer to a blob, and you're done
-      // var bb = new BlobBuilder();
-      // bb.append(ab);
-      // return bb.getBlob(mimeString);
-      // New Code
       return new Blob([ab], { type: mimeString })
     },
     async blobToFile (theBlob, fileName, type) {
