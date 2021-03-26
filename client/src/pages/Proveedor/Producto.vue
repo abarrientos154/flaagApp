@@ -14,9 +14,6 @@
           </q-avatar>
         </div> -->
         <div class="column">
-
-        </div>
-        <div class="column">
           <q-avatar size="80px" icon="add_a_photo" @click="captureImage" text-color="white" class="bg-primary">
           </q-avatar>
           <q-img :src="prueba.data" style="width:100px;height:100px" />
@@ -193,7 +190,8 @@ export default {
       navigator.camera.getPicture(
         data => { // on success
           this.test = this.dataURItoBlob(`data:image/jpeg;base64,${data}`)
-          this.test2 = this.dataURItoBlob(data)
+          const file = new File([data], 'image.png')
+          this.test2 = JSON.stringify(file)
           this.prueba.data = data
           this.dialog = true
         },
