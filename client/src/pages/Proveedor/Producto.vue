@@ -72,28 +72,6 @@
         <q-btn label="guardar" @click="guardar()" color="primary" push style="width:50%" />
       </q-card-actions>
     </q-card>
-    <q-dialog v-model="alert.show">
-      <q-card>
-        <q-card-section>
-          <div class="text-h6">DATA CAMARA PRUEBA 3</div>
-          <div>
-            <camera :requestAccess="true" @camera:captured="obtenerImagenVueCamera">
-              <div slot="capture" name="capture"> capturar </div>
-              <div slot="download" name="download"> guardar </div>
-            </camera>
-          </div>
-        </q-card-section>
-
-        <q-card-section class="q-pt-none">
-          {{alert.info}}
-          <img :src="test" style="width:100px;height:100px" />
-        </q-card-section>
-
-        <q-card-actions align="right">
-          <q-btn flat label="OK" color="primary" v-close-popup />
-        </q-card-actions>
-      </q-card>
-    </q-dialog>
   </q-page>
 </template>
 
@@ -102,11 +80,6 @@ export default {
   data () {
     return {
       test: 'instagram.png',
-      alert: {
-        show: true,
-        info: null,
-        src: null
-      },
       thumbStyle: {
         right: '4px',
         borderRadius: '5px',
@@ -148,10 +121,6 @@ export default {
     this.getCategorias()
   },
   methods: {
-    async obtenerImagenVueCamera () {
-      console.log(this.test, 'test')
-      this.alert.show = true
-    },
     reiniciarCat (ind) {
       if (ind === 1) {
         delete this.form.subniveluno_id
