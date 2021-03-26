@@ -12,11 +12,12 @@
               </q-file>
             </div>
           </q-avatar>
-        </div> -->
+        </div>
         <div class="">
           <q-avatar size="80px" icon="add_a_photo" @click="imagesSubirCordova" text-color="white" class="bg-primary">
           </q-avatar>
-        </div>
+        </div> -->
+        <q-input v-model="test" type="file" accept="image/*" capture="camera" @input="captureImage()" />
       </div>
       <div class="text-grey-6">Imagenes del producto (hasta 5 imagenes)</div>
       <q-scroll-area v-if="images && images.length > 0" horizontal style="height:85px; width: 100%;" class="bg-grey-1"
@@ -97,14 +98,7 @@
 </template>
 
 <script>
-// import { Plugins, CameraResultType } from '@capacitor/core'
-// import randomize from 'randomatic'
-// const { Camera } = Plugins
-import { Camera } from 'vue-capture'
 export default {
-  components: {
-    Camera
-  },
   data () {
     return {
       test: 'instagram.png',
@@ -154,10 +148,9 @@ export default {
     this.getCategorias()
   },
   methods: {
-    async obtenerImagenVueCamera (data) {
-      this.alert.src = data
-      this.alert.info = data
-      this.test = data
+    async obtenerImagenVueCamera () {
+      console.log(this.test, 'test')
+      this.alert.show = true
     },
     reiniciarCat (ind) {
       if (ind === 1) {
@@ -201,58 +194,11 @@ export default {
         }
       })
     },
-    async imagesSubirCordova () {
-      navigator.camera.getPicture(
-        data => { // on success
-          this.imageSrc = `data:image/jpeg;base64,${data}`
-          this.alert.show = true
-          this.alert.info = `data:image/jpeg;base64,${data}`
-          this.alert.src = `data:image/jpeg;base64,${data}`
-          this.test = `data:image/jpeg;base64,${data}`
-        },
-        () => { // on fail
-          this.$q.notify('Could not access device camera.')
-        },
-        {
-          // camera options
-        }
-      )
-    },
-    async dataURItoBlob (dataURI) {
-      var byteString = atob(dataURI.split(',')[1])
-      var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
-      var ab = new ArrayBuffer(byteString.length)
-      var ia = new Uint8Array(ab)
-      for (var i = 0; i < byteString.length; i++) {
-        ia[i] = byteString.charCodeAt(i)
-      }
-      return new Blob([ab], { type: mimeString })
-    },
-    async blobToFile (theBlob, fileName, type) {
-      // A Blob() is almost a File() - it's just missing the two properties below which we will add
-      return new File([theBlob], fileName, type)
-    },
     async captureImage () {
-      /* const image = await Camera.getPhoto({
-        quality: 90,
-        allowEditing: true
-        // resultType: CameraResultType.DataUrl
-      }) */
-      // image.webPath will contain a path that can be set as an image src.
-      // You can access the original file using image.path, which can be
-      // passed to the Filesystem API to read the raw data of the image,
-      // if desired (or pass resultType: CameraResultType.Base64 to getPhoto)
-      // console.log(image, 'imageeeeeeee pluginnnnnnnn')
-      // this.imageSrc = await this.dataURItoBlob(image.dataUrl)
-      console.log(this.imageSrc, 'imgsrc')
-      // const codeFile = randomize('Aa0', 30)
-      // console.log(codeFile + '.' + image.format, 'radomaticcc')
-      // var file = await this.blobToFile(image, codeFile + '.' + image.format, { type: 'image/png' })
-      // console.log(file, 'fileeeeeeeeee')
-      var file = new File([this.imageSrc], 'image.png')
-      console.log(file, 'fileeeeeeeeeeee')
-      this.images.push(file)
+      this.imageSrc = this.test[0]
+      this.images.push(this.imageSrc)
       this.imagesSubir.push(URL.createObjectURL(this.imageSrc))
+      this.imageSrc = null
       console.log(this.images, 'images', this.imagesSubir, 'images subir')
     },
     insertarImagen () {
