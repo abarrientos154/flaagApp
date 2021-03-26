@@ -74,7 +74,13 @@
     <q-dialog v-model="alert.show">
       <q-card>
         <q-card-section>
-          <div class="text-h6">DATA CAMARA PRUEBA 2</div>
+          <div class="text-h6">DATA CAMARA PRUEBA 3</div>
+          <div>
+            <camera :requestAccess="true">
+              <div slot="capture" name="capture"> snap </div>
+              <div slot="download" name="download"> save </div>
+            </camera>
+          </div>
         </q-card-section>
 
         <q-card-section class="q-pt-none">
@@ -91,15 +97,19 @@
 </template>
 
 <script>
-import { Plugins, CameraResultType } from '@capacitor/core'
+// import { Plugins, CameraResultType } from '@capacitor/core'
 // import randomize from 'randomatic'
-const { Camera } = Plugins
+// const { Camera } = Plugins
+import { Camera } from 'vue-capture'
 export default {
+  components: {
+    Camera
+  },
   data () {
     return {
       test: 'instagram.png',
       alert: {
-        show: false,
+        show: true,
         info: null,
         src: null
       },
@@ -218,17 +228,17 @@ export default {
       return new File([theBlob], fileName, type)
     },
     async captureImage () {
-      const image = await Camera.getPhoto({
+      /* const image = await Camera.getPhoto({
         quality: 90,
-        allowEditing: true,
-        resultType: CameraResultType.DataUrl
-      })
+        allowEditing: true
+        // resultType: CameraResultType.DataUrl
+      }) */
       // image.webPath will contain a path that can be set as an image src.
       // You can access the original file using image.path, which can be
       // passed to the Filesystem API to read the raw data of the image,
       // if desired (or pass resultType: CameraResultType.Base64 to getPhoto)
-      console.log(image, 'imageeeeeeee pluginnnnnnnn')
-      this.imageSrc = await this.dataURItoBlob(image.dataUrl)
+      // console.log(image, 'imageeeeeeee pluginnnnnnnn')
+      // this.imageSrc = await this.dataURItoBlob(image.dataUrl)
       console.log(this.imageSrc, 'imgsrc')
       // const codeFile = randomize('Aa0', 30)
       // console.log(codeFile + '.' + image.format, 'radomaticcc')
