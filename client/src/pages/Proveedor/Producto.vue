@@ -197,7 +197,7 @@ export default {
           this.$q.notify('Could not access device camera.')
         },
         {
-          destinationType: 0
+          destinationType: 1
         }
       )
       /* this.imageSrc = this.test[0]
