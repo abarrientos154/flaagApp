@@ -20,7 +20,7 @@
           <q-avatar size="80px" icon="add_a_photo" @click="captureImage" text-color="white" class="bg-primary">
           </q-avatar>
           <q-img :src="prueba.data" style="width:100px;height:100px" />
-          <div> {{prueba.data}} </div>
+          <p> {{prueba.data}} </p>
         </div>
       </div>
       <div class="text-grey-6">Imagenes del producto (hasta 5 imagenes)</div>
