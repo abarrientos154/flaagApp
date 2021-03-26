@@ -189,8 +189,8 @@ export default {
         data => { // on success
           this.imageSrc = `data:image/jpeg;base64,${data}`
           this.alert.show = true
-          this.alert.info = data
-          this.alert.src = this.imageSrc
+          this.alert.info = `data:image/jpeg;base64,${data}`
+          this.alert.src = `data:image/jpeg;base64,${data}`
         },
         () => { // on fail
           this.$q.notify('Could not access device camera.')
