@@ -76,9 +76,9 @@
         <q-card-section>
           <div class="text-h6">DATA CAMARA PRUEBA 3</div>
           <div>
-            <camera :requestAccess="true">
-              <div slot="capture" name="capture"> snap </div>
-              <div slot="download" name="download"> save </div>
+            <camera :requestAccess="true" @camera:captured="obtenerImagenVueCamera">
+              <div slot="capture" name="capture"> capturar </div>
+              <div slot="download" name="download"> guardar </div>
             </camera>
           </div>
         </q-card-section>
@@ -154,6 +154,11 @@ export default {
     this.getCategorias()
   },
   methods: {
+    async obtenerImagenVueCamera (data) {
+      this.alert.src = data
+      this.alert.info = data
+      this.test = data
+    },
     reiniciarCat (ind) {
       if (ind === 1) {
         delete this.form.subniveluno_id
