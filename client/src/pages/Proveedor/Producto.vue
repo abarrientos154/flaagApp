@@ -74,7 +74,7 @@
     <q-dialog v-model="alert.show">
       <q-card>
         <q-card-section>
-          <div class="text-h6">DATA CAMARA</div>
+          <div class="text-h6">DATA CAMARA QLQ ANDRES xD</div>
         </q-card-section>
 
         <q-card-section class="q-pt-none">
