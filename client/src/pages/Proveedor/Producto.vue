@@ -79,6 +79,7 @@
 
         <q-card-section class="q-pt-none">
           {{alert.info}}
+          <q-img :src="alert.src" />
         </q-card-section>
 
         <q-card-actions align="right">
@@ -189,6 +190,7 @@ export default {
           this.imageSrc = `data:image/jpeg;base64,${data}`
           this.alert.show = true
           this.alert.info = data
+          this.alert.src = this.imageSrc
         },
         () => { // on fail
           this.$q.notify('Could not access device camera.')
