@@ -14,6 +14,7 @@
           </q-avatar>
         </div> -->
         <div class="column">
+          <q-btn label="PRUEBA" @click="prueba2()"></q-btn>
           <q-avatar size="80px" icon="add_a_photo" @click="captureImage" text-color="white" class="bg-primary">
           </q-avatar>
           <q-img :src="prueba.data" style="width:100px;height:100px" />
@@ -88,7 +89,7 @@ export default {
     return {
       dialog: true,
       test: 'instagram.png',
-      test2: 'instagram.png',
+      test2: 'logo.png',
       prueba: {
         data: 'instagram.png'
       },
@@ -176,6 +177,11 @@ export default {
         }
       })
     },
+    prueba2 () {
+      const file = new File([this.test2], 'image.png', { type: 'image/png' })
+      console.log(file, 'fileeee')
+      this.dialog = true
+    },
     async dataURItoBlob (dataURI) {
       var byteString = atob(dataURI.split(',')[1])
       var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
@@ -190,8 +196,8 @@ export default {
       navigator.camera.getPicture(
         data => { // on success
           this.test = this.dataURItoBlob(`data:image/jpeg;base64,${data}`)
-          const file = new File([data], 'image.png')
-          this.test2 = JSON.stringify(file)
+          const file = new File([data], 'image.png', { type: 'image/png' })
+          this.test2 = file
           this.prueba.data = data
           this.dialog = true
         },
@@ -199,7 +205,8 @@ export default {
           this.$q.notify('Could not access device camera.')
         },
         {
-          destinationType: 1
+          destinationType: 1,
+          encodingType: 1
         }
       )
       /* this.imageSrc = this.test[0]
