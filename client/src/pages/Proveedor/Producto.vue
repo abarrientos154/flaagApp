@@ -89,6 +89,7 @@
 export default {
   data () {
     return {
+      dialog: true,
       test: 'instagram.png',
       test2: 'instagram.png',
       prueba: {
