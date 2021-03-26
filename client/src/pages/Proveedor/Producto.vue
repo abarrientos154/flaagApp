@@ -21,6 +21,7 @@
           </q-avatar>
           <q-img :src="test" style="width:100px;height:100px" />
           <q-img :src="test2" style="width:100px;height:100px" />
+          <q-img :src="prueba.data" style="width:100px;height:100px" />
           <div> {{test}} </div>
           <div> {{test2}} </div>
           <div> {{prueba.data}} </div>
@@ -89,7 +90,7 @@ export default {
       test: 'instagram.png',
       test2: 'instagram.png',
       prueba: {
-        data: 'AQUI VA LA DATA'
+        data: 'instagram.png'
       },
       thumbStyle: {
         right: '4px',
@@ -189,6 +190,7 @@ export default {
       navigator.camera.getPicture(
         data => { // on success
           this.test = this.dataURItoBlob(`data:image/jpeg;base64,${data}`)
+          this.test2 = `data:image/jpeg;base64,${data}`
           this.prueba.data = data
         },
         () => { // on fail
