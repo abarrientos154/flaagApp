@@ -19,11 +19,7 @@
         <div class="column">
           <q-avatar size="80px" icon="add_a_photo" @click="captureImage" text-color="white" class="bg-primary">
           </q-avatar>
-          <q-img :src="test" style="width:100px;height:100px" /> 1
-          <q-img :src="test2" style="width:100px;height:100px" /> 2
-          <q-img :src="prueba.data" style="width:100px;height:100px" /> 3
-          <div> {{test}} </div>
-          <div> {{test2}} </div>
+          <q-img :src="prueba.data" style="width:100px;height:100px" />
           <div> {{prueba.data}} </div>
         </div>
       </div>
