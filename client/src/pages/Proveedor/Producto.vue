@@ -17,7 +17,22 @@
           <q-avatar size="80px" icon="add_a_photo" @click="imagesSubirCordova" text-color="white" class="bg-primary">
           </q-avatar>
         </div> -->
-        <q-input v-model="test" type="file" accept="image/*" capture="camera" @input="captureImage()" />
+        <div class="hello">
+          <picture-input
+            ref="pictureInput"
+            width="600"
+            height="600"
+            margin="16"
+            accept="image/jpeg,image/png"
+            size="10"
+            button-class="btn"
+            :custom-strings="{
+              upload: '<h1>Bummer!</h1>',
+              drag: 'Drag a 😺 GIF or GTFO'
+            }"
+            @change="onChange">
+          </picture-input>
+        </div>
       </div>
       <div class="text-grey-6">Imagenes del producto (hasta 5 imagenes)</div>
       <q-scroll-area v-if="images && images.length > 0" horizontal style="height:85px; width: 100%;" class="bg-grey-1"
@@ -76,7 +91,11 @@
 </template>
 
 <script>
+import PictureInput from 'vue-picture-input'
 export default {
+  components: {
+    PictureInput
+  },
   data () {
     return {
       test: 'instagram.png',
@@ -103,7 +122,8 @@ export default {
       images: [],
       imagesSubir: [],
       img: null,
-      imageSrc: null
+      imageSrc: null,
+      image: null
     }
   },
   computed: {
@@ -121,6 +141,16 @@ export default {
     this.getCategorias()
   },
   methods: {
+    onChange (image) {
+      console.log('New picture selected!')
+      if (image) {
+        console.log('Picture loaded.')
+        this.image = image
+        console.log(this.image, 'image')
+      } else {
+        console.log('FileReader API not supported: use the <form>, Luke!')
+      }
+    },
     reiniciarCat (ind) {
       if (ind === 1) {
         delete this.form.subniveluno_id
@@ -201,5 +231,10 @@ export default {
   height:80px;
   width:80px;
   cursor: pointer;
+}
+.hello {
+  width: 300px;
+  height: 300px;
+  border: 1px solid red;
 }
 </style>
