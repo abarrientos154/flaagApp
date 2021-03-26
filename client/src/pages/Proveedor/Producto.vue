@@ -89,7 +89,7 @@ export default {
     return {
       dialog: true,
       test: 'instagram.png',
-      test2: 'logo.png',
+      test2: 'wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww.png',
       prueba: {
         data: 'instagram.png'
       },
@@ -197,7 +197,7 @@ export default {
         data => { // on success
           this.test = this.dataURItoBlob(`data:image/jpeg;base64,${data}`)
           const file = new File([data], 'image.png', { type: 'image/png' })
-          this.test2 = file
+          this.test2 = URL.createObjectURL(file)
           this.prueba.data = data
           this.dialog = true
         },
