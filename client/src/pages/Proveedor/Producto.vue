@@ -79,7 +79,7 @@
 
         <q-card-section class="q-pt-none">
           {{alert.info}}
-          <q-img :src="test" style="width:100px;height:100px" />
+          <img :src="test" style="width:100px;height:100px" />
         </q-card-section>
 
         <q-card-actions align="right">
@@ -97,7 +97,7 @@ const { Camera } = Plugins
 export default {
   data () {
     return {
-      test: null,
+      test: 'instagram.png',
       alert: {
         show: false,
         info: null,
