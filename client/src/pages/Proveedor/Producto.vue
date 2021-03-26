@@ -79,7 +79,7 @@
 
         <q-card-section class="q-pt-none">
           {{alert.info}}
-          <q-img :src="alert.src" />
+          <q-img :src="alert.src" style="width:100px;height:100px" />
         </q-card-section>
 
         <q-card-actions align="right">
