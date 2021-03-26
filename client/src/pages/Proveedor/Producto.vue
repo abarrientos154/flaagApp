@@ -12,26 +12,16 @@
               </q-file>
             </div>
           </q-avatar>
-        </div>
-        <div class="">
-          <q-avatar size="80px" icon="add_a_photo" @click="imagesSubirCordova" text-color="white" class="bg-primary">
-          </q-avatar>
         </div> -->
-        <div class="hello">
-          <picture-input
-            ref="pictureInput"
-            width="600"
-            height="600"
-            margin="16"
-            accept="image/jpeg,image/png"
-            size="10"
-            button-class="btn"
-            :custom-strings="{
-              upload: '<h1>Bummer!</h1>',
-              drag: 'Drag a 😺 GIF or GTFO'
-            }"
-            @change="onChange">
-          </picture-input>
+        <div class="column">
+
+        </div>
+        <div class="column">
+          <q-avatar size="80px" icon="add_a_photo" @click="captureImage" text-color="white" class="bg-primary">
+          </q-avatar>
+          <q-img :src="test" style="width:100px;height:100px" />
+          <div> {{test}} </div>
+          <div> {{prueba.data}} </div>
         </div>
       </div>
       <div class="text-grey-6">Imagenes del producto (hasta 5 imagenes)</div>
@@ -91,14 +81,13 @@
 </template>
 
 <script>
-import PictureInput from 'vue-picture-input'
 export default {
-  components: {
-    PictureInput
-  },
   data () {
     return {
       test: 'instagram.png',
+      prueba: {
+        data: 'AQUI VA LA DATA'
+      },
       thumbStyle: {
         right: '4px',
         borderRadius: '5px',
@@ -141,16 +130,6 @@ export default {
     this.getCategorias()
   },
   methods: {
-    onChange (image) {
-      console.log('New picture selected!')
-      if (image) {
-        console.log('Picture loaded.')
-        this.image = image
-        console.log(this.image, 'image')
-      } else {
-        console.log('FileReader API not supported: use the <form>, Luke!')
-      }
-    },
     reiniciarCat (ind) {
       if (ind === 1) {
         delete this.form.subniveluno_id
@@ -194,10 +173,22 @@ export default {
       })
     },
     async captureImage () {
-      this.imageSrc = this.test[0]
+      navigator.camera.getPicture(
+        data => { // on success
+          this.test = `data:image/jpeg;base64,${data}`
+          this.prueba.data = data
+        },
+        () => { // on fail
+          this.$q.notify('Could not access device camera.')
+        },
+        {
+          // camera options
+        }
+      )
+      /* this.imageSrc = this.test[0]
       this.images.push(this.imageSrc)
       this.imagesSubir.push(URL.createObjectURL(this.imageSrc))
-      this.imageSrc = null
+      this.imageSrc = null */
       console.log(this.images, 'images', this.imagesSubir, 'images subir')
     },
     insertarImagen () {
