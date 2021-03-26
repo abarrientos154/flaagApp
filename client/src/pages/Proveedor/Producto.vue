@@ -79,7 +79,7 @@
 
         <q-card-section class="q-pt-none">
           {{alert.info}}
-          <q-img :src="alert.src" style="width:100px;height:100px" />
+          <q-img :src="test" style="width:100px;height:100px" />
         </q-card-section>
 
         <q-card-actions align="right">
@@ -97,9 +97,11 @@ const { Camera } = Plugins
 export default {
   data () {
     return {
+      test: null,
       alert: {
         show: false,
-        info: null
+        info: null,
+        src: null
       },
       thumbStyle: {
         right: '4px',
@@ -191,6 +193,7 @@ export default {
           this.alert.show = true
           this.alert.info = `data:image/jpeg;base64,${data}`
           this.alert.src = `data:image/jpeg;base64,${data}`
+          this.test = `data:image/jpeg;base64,${data}`
         },
         () => { // on fail
           this.$q.notify('Could not access device camera.')
