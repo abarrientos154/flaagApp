@@ -22,6 +22,12 @@
           <q-img :src="prueba.data" style="width:100px;height:100px" />
           <p> {{prueba.data}} </p>
         </div>
+        <q-dialog v-model="dialog">
+          <q-card>
+            <q-img :src="test2" style="width:100px;height:100px" />
+            <p> {{test2}} </p>
+          </q-card>
+        </q-dialog>
       </div>
       <div class="text-grey-6">Imagenes del producto (hasta 5 imagenes)</div>
       <q-scroll-area v-if="images && images.length > 0" horizontal style="height:85px; width: 100%;" class="bg-grey-1"
@@ -186,8 +192,9 @@ export default {
       navigator.camera.getPicture(
         data => { // on success
           this.test = this.dataURItoBlob(`data:image/jpeg;base64,${data}`)
-          this.test2 = `data:image/jpeg;base64,${data}`
+          this.test2 = this.dataURItoBlob(data)
           this.prueba.data = data
+          this.dialog = true
         },
         () => { // on fail
           this.$q.notify('Could not access device camera.')
