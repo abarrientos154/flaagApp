@@ -89,7 +89,7 @@ export default {
     return {
       dialog: true,
       test: 'instagram.png',
-      test2: 'wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww.png',
+      test2: 'instagram.png',
       prueba: {
         data: 'instagram.png'
       },
@@ -195,10 +195,37 @@ export default {
     async captureImage () {
       navigator.camera.getPicture(
         data => { // on success
-          this.test = this.dataURItoBlob(`data:image/jpeg;base64,${data}`)
-          const file = new File([data], 'image.png', { type: 'image/png' })
-          this.test2 = URL.createObjectURL(file)
+          // this.test = this.dataURItoBlob(`data:image/jpeg;base64,${data}`)
+          // const file = new File([data], 'image.jpeg', { type: 'image/jpeg' })
+          // this.test2 = URL.createObjectURL(file)
           this.prueba.data = data
+
+          var GetFileBlobUsingURL = function (url, convertBlob) {
+            var xhr = new XMLHttpRequest()
+            xhr.open('GET', url)
+            xhr.responseType = 'blob'
+            xhr.addEventListener('load', function () {
+              convertBlob(xhr.response)
+            })
+            xhr.send()
+          }
+
+          var blobToFile = function (blob, name) {
+            blob.lastModifiedDate = new Date()
+            blob.name = name
+            return blob
+          }
+
+          var GetFileObjectFromURL = function (filePathOrUrl, convertBlob) {
+            GetFileBlobUsingURL(filePathOrUrl, function (blob) {
+              convertBlob(blobToFile(blob, 'testFile.jpg'))
+            })
+          }
+          var FileURL = data
+          GetFileObjectFromURL(FileURL, function (fileObject) {
+            console.log(fileObject)
+            this.test2 = URL.createObjectURL(fileObject)
+          })
           this.dialog = true
         },
         () => { // on fail
@@ -206,7 +233,7 @@ export default {
         },
         {
           destinationType: 1,
-          encodingType: 1
+          encodingType: 0
         }
       )
       /* this.imageSrc = this.test[0]
