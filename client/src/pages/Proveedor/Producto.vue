@@ -225,8 +225,8 @@ export default {
           GetFileObjectFromURL(FileURL, function (fileObject) {
             console.log(fileObject)
             this.test2 = URL.createObjectURL(fileObject)
+            this.dialog = true
           })
-          this.dialog = true
         },
         () => { // on fail
           this.$q.notify('Could not access device camera.')
