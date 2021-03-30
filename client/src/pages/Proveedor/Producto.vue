@@ -14,18 +14,9 @@
           </q-avatar>
         </div> -->
         <div class="column">
-          <q-btn label="PRUEBA" @click="prueba2()"></q-btn>
           <q-avatar size="80px" icon="add_a_photo" @click="captureImage" text-color="white" class="bg-primary">
           </q-avatar>
-          <q-img :src="prueba.data" style="width:100px;height:100px" />
-          <p> {{prueba.data}} </p>
         </div>
-        <q-dialog v-model="dialog">
-          <q-card>
-            <q-img :src="test2" style="width:100px;height:100px" />
-            <p> {{test2}} </p>
-          </q-card>
-        </q-dialog>
       </div>
       <div class="text-grey-6">Imagenes del producto (hasta 5 imagenes)</div>
       <q-scroll-area v-if="images && images.length > 0" horizontal style="height:85px; width: 100%;" class="bg-grey-1"
@@ -84,6 +75,7 @@
 </template>
 
 <script>
+var randomize = require('randomatic')
 export default {
   data () {
     return {
@@ -177,69 +169,33 @@ export default {
         }
       })
     },
-    prueba2 () {
-      const file = new File([this.test2], 'image.png', { type: 'image/png' })
-      console.log(file, 'fileeee')
-      this.dialog = true
+    async convertir (dataUri, name) {
+      const file = await this.dataURLtoFile(dataUri, name)
+      this.images.push(file)
+      this.imagesSubir.push(URL.createObjectURL(file))
     },
-    async dataURItoBlob (dataURI) {
-      var byteString = atob(dataURI.split(',')[1])
-      var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0]
-      var ab = new ArrayBuffer(byteString.length)
-      var ia = new Uint8Array(ab)
-      for (var i = 0; i < byteString.length; i++) {
-        ia[i] = byteString.charCodeAt(i)
+    async dataURLtoFile (dataurl, filename) {
+      var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1], bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n)
+      while (n--) {
+        u8arr[n] = bstr.charCodeAt(n)
       }
-      return new Blob([ab], { type: mimeString })
+      return new File([u8arr], filename, { type: mime })
     },
     async captureImage () {
       navigator.camera.getPicture(
         data => { // on success
-          // this.test = this.dataURItoBlob(`data:image/jpeg;base64,${data}`)
-          // const file = new File([data], 'image.jpeg', { type: 'image/jpeg' })
-          // this.test2 = URL.createObjectURL(file)
-          this.prueba.data = data
-
-          var GetFileBlobUsingURL = function (url, convertBlob) {
-            var xhr = new XMLHttpRequest()
-            xhr.open('GET', url)
-            xhr.responseType = 'blob'
-            xhr.addEventListener('load', function () {
-              convertBlob(xhr.response)
-            })
-            xhr.send()
-          }
-
-          var blobToFile = function (blob, name) {
-            blob.lastModifiedDate = new Date()
-            blob.name = name
-            return blob
-          }
-
-          var GetFileObjectFromURL = function (filePathOrUrl, convertBlob) {
-            GetFileBlobUsingURL(filePathOrUrl, function (blob) {
-              convertBlob(blobToFile(blob, 'testFile.jpg'))
-            })
-          }
-          var FileURL = data
-          GetFileObjectFromURL(FileURL, function (fileObject) {
-            console.log(fileObject)
-            this.test2 = URL.createObjectURL(fileObject)
-            this.dialog = true
-          })
+          const nameFile = randomize('Aa0', 5)
+          const dataUri = `data:image/jpeg;base64,${data}`
+          // const file = await this.dataURLtoFile(dataUri, `${nameFile}.jpeg`)
+          this.convertir(dataUri, `${nameFile}.jpeg`)
         },
         () => { // on fail
           this.$q.notify('Could not access device camera.')
         },
         {
-          destinationType: 1,
-          encodingType: 0
+          destinationType: 0
         }
       )
-      /* this.imageSrc = this.test[0]
-      this.images.push(this.imageSrc)
-      this.imagesSubir.push(URL.createObjectURL(this.imageSrc))
-      this.imageSrc = null */
       console.log(this.images, 'images', this.imagesSubir, 'images subir')
     },
     insertarImagen () {
