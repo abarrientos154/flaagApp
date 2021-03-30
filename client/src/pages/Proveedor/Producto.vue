@@ -14,7 +14,7 @@
           </q-avatar>
         </div> -->
         <div class="column">
-          <q-avatar size="80px" icon="add_a_photo" @click="captureImage" text-color="white" class="bg-primary">
+          <q-avatar size="80px" icon="add_a_photo" @click="captureImage" v-if="images.length < 5" text-color="white" class="bg-primary">
           </q-avatar>
         </div>
       </div>
