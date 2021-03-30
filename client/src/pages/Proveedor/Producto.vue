@@ -209,7 +209,6 @@ export default {
           this.convertir(dataUri, `${nameFile}.jpeg`)
         },
         () => { // on fail
-          this.$q.notify('Could not access device camera.')
         },
         {
           destinationType: 0
